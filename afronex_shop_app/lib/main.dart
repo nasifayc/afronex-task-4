@@ -2,8 +2,11 @@ import 'package:afronex_shop_app/firebase_options.dart';
 import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 Future<void> main() async {
+  SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
@@ -18,7 +21,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
- 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

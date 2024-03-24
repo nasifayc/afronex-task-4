@@ -37,6 +37,8 @@ class _LandingPageState extends State<LandingPage> {
           _updatePage(value);
         },
         activeColor: Colors.teal,
+        gap: 10,
+        color: Colors.black,
         tabs: const [
           GButton(icon: Icons.home, text: 'Home'),
           GButton(icon: Icons.search, text: 'Search'),
