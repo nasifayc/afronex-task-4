@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936846897668",
+    "project_id": "afronex-shop",
+    "storage_bucket": "afronex-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936846897668:android:39df679f6149ba0f383b51",
+        "android_client_info": {
+          "package_name": "com.example.afronex_shop_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBOCgoOE7oCTSsAEf48mN57aM7eCoF9vQ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
