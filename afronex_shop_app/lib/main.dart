@@ -1,4 +1,5 @@
-import 'package:afronex_shop_app/screens/home.dart';
+
+import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,12 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Afronex Shop',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const LandingPage(),
     );
   }
 }
