@@ -1,6 +1,8 @@
 import 'package:afronex_shop_app/screens/users/login.dart';
+import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -16,6 +18,8 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   late bool isSigning;
 
+  get services => null;
+
   @override
   void initState() {
     super.initState();
@@ -28,6 +32,32 @@ class _SignUpPageState extends State<SignUpPage> {
     _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  Future<void> _signUpWithEmailAndPassword() async {
+    setState(() {
+      isSigning = true;
+    });
+
+    User? user = await services.signUp(_usernameController.text.trim(),
+        _emailController.text.trim(), _passwordController.text.trim());
+
+    if (user != null) {
+      setState(() {
+        isSigning = false;
+      });
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LoginPage(),
+          ),
+          (route) => false);
+      showToast(message: 'User Credit Successfuly');
+    } else {
+      setState(() {
+        isSigning = false;
+      });
+    }
   }
 
   @override
@@ -45,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(
                 height: 20,
               ),
-               FormContainer(
+              FormContainer(
                 controller: _usernameController,
                 labelText: 'Username',
                 inputType: TextInputType.text,
@@ -76,9 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ? CircularProgressIndicator(
                       color: Theme.of(context).primaryColor)
                   : GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/landing');
-                      },
+                      onTap: _signUpWithEmailAndPassword,
                       child: Button(
                         title: 'Sign Up',
                         width: size.width * 0.5,

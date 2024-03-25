@@ -1,21 +1,27 @@
-class User {
-  final String username;
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class UserModel {
+  final String _defaultProfileURL = 'asset/images/default.jpg';
+  String username;
   final String email;
   final String password;
+  final String userId;
   String? imgUrl;
 
-  User(
+  UserModel(
       {required this.username,
       required this.email,
       required this.password,
+      required this.userId,
       this.imgUrl});
 
-  factory User.fromMap(Map<String, dynamic> json) {
-    return User(
-        username: json['username'],
-        email: json['email'],
-        password: json['password'],
-        imgUrl: json['imgUrl']);
+  static UserModel fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
+    return UserModel(
+        username: snapshot['username'],
+        email: snapshot['email'],
+        password: snapshot['password'],
+        imgUrl: snapshot['imgUrl'],
+        userId: snapshot['userId']);
   }
 
   Map<String, dynamic> toJson() {
@@ -23,7 +29,8 @@ class User {
       'username': username,
       'email': email,
       'password': password,
-      'imgUrl': imgUrl
+      'imgUrl': imgUrl,
+      'userId': userId
     };
   }
 }

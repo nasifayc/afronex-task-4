@@ -1,6 +1,9 @@
 import 'package:afronex_shop_app/screens/users/signup.dart';
+import 'package:afronex_shop_app/services/firebase_auth_services.dart';
+import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -11,6 +14,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  AuthServices services = AuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late bool isLogging;
@@ -26,6 +30,26 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+  }
+
+  Future<void> _loginWithEmailAndPassword() async {
+    setState(() {
+      isLogging = true;
+    });
+
+    User? user = await services.logIn(
+        _emailController.text.trim(), _passwordController.text.trim());
+    if (user != null) {
+      setState(() {
+        isLogging = false;
+      });
+      Navigator.pushNamed(context, '/landing');
+    } else {
+      setState(() {
+        isLogging = false;
+      });
+      showToast(message: 'No User Found');
+    }
   }
 
   @override
@@ -65,9 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                   ? CircularProgressIndicator(
                       color: Theme.of(context).primaryColor)
                   : GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/landing');
-                      },
+                      onTap:_loginWithEmailAndPassword,
                       child: Button(
                         title: 'Login',
                         width: size.width * 0.5,
