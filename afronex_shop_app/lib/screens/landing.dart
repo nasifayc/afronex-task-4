@@ -1,7 +1,7 @@
 import 'package:afronex_shop_app/screens/bottom_navigations/cartpage.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/home.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/profile_page.dart';
-import 'package:afronex_shop_app/screens/bottom_navigations/serach.dart';
+import 'package:afronex_shop_app/screens/bottom_navigations/search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 

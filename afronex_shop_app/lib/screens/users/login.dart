@@ -31,71 +31,78 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text('Welcom Back!',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-            const SizedBox(
-              height: 20,
-            ),
-            FormContainer(
-              controller: _emailController,
-              labelText: 'Email',
-              inputType: TextInputType.emailAddress,
-              isPasswordField: false,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            FormContainer(
-              controller: _passwordController,
-              labelText: 'Password',
-              inputType: TextInputType.text,
-              isPasswordField: false,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, '/home');
-              },
-              child: Button(
-                title: 'Login',
-                width: size.width * 0.3,
-                color: Theme.of(context).primaryColor,
+    return Scaffold(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('Welcom Back!',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              children: [
-                const Text('Don\'t have an account?'),
-                const SizedBox(
-                  width: 15,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SignUpPage(),
-                        ),
-                        (route) => false);
-                  },
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(
-                        color: Colors.blue, fontWeight: FontWeight.bold),
+              FormContainer(
+                controller: _emailController,
+                labelText: 'Email',
+                inputType: TextInputType.emailAddress,
+                isPasswordField: false,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              FormContainer(
+                controller: _passwordController,
+                labelText: 'Password',
+                inputType: TextInputType.text,
+                isPasswordField: true,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              isLogging
+                  ? CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor)
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/landing');
+                      },
+                      child: Button(
+                        title: 'Login',
+                        width: size.width * 0.5,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Don\'t have an account?'),
+                  const SizedBox(
+                    width: 15,
                   ),
-                )
-              ],
-            )
-          ],
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignUpPage(),
+                          ),
+                          (route) => false);
+                    },
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );

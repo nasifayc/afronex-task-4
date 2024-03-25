@@ -13,19 +13,16 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 50,
+      width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-              colors: [Theme.of(context).primaryColor, Colors.white],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight)),
+          color: Theme.of(context).primaryColor),
       child: Center(
         child: Text(
-          title,style: const TextStyle(
-            color: Colors.white,
-            fontSize: 25,
-            fontWeight: FontWeight.bold
-          ),
+          title,
+          style: const TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
         ),
       ),
     );

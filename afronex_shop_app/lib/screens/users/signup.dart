@@ -11,6 +11,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late bool isSigning;
@@ -24,6 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     super.dispose();
+    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
   }
@@ -31,10 +33,10 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Center(
+    return Scaffold(
+      body: Center(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -42,6 +44,15 @@ class _SignUpPageState extends State<SignUpPage> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
               const SizedBox(
                 height: 20,
+              ),
+               FormContainer(
+                controller: _usernameController,
+                labelText: 'Username',
+                inputType: TextInputType.text,
+                isPasswordField: false,
+              ),
+              const SizedBox(
+                height: 10,
               ),
               FormContainer(
                 controller: _emailController,
@@ -56,21 +67,24 @@ class _SignUpPageState extends State<SignUpPage> {
                 controller: _passwordController,
                 labelText: 'Password',
                 inputType: TextInputType.text,
-                isPasswordField: false,
+                isPasswordField: true,
               ),
               const SizedBox(
                 height: 20,
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/home');
-                },
-                child: Button(
-                  title: 'SignUp',
-                  width: size.width * 0.3,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
+              isSigning
+                  ? CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor)
+                  : GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/landing');
+                      },
+                      child: Button(
+                        title: 'Sign Up',
+                        width: size.width * 0.5,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
               const SizedBox(
                 height: 10,
               ),
@@ -84,7 +98,11 @@ class _SignUpPageState extends State<SignUpPage> {
                   GestureDetector(
                     onTap: () {
                       Navigator.pushAndRemoveUntil(
-                          context, MaterialPageRoute(builder: (context) => const LoginPage(),), (route) => false);
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LoginPage(),
+                          ),
+                          (route) => false);
                     },
                     child: const Text(
                       'Login',
