@@ -5,21 +5,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  late User? _currentUser;
 
-  User? getCurrentUser() => _auth.currentUser;
+  User? getCurrentUser() => _currentUser;
 
   Future<void> _addUserToFireBase(
       String username, String email, String password, String id) async {
-    final userCollection = FirebaseFirestore.instance.collection('users');
+    try {
+      final userCollection = FirebaseFirestore.instance.collection('users');
 
-    UserModel newUser = UserModel(
-        username: username,
-        email: email,
-        password: password,
-        userId: id,
-        imgUrl: null);
+      UserModel newUser = UserModel(
+          username: username,
+          email: email,
+          password: password,
+          userId: id,
+          imgUrl: null);
 
-    await userCollection.doc(newUser.userId).set(newUser.toJson());
+      await userCollection.doc(newUser.userId).set(newUser.toJson());
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 
   Future<User?> signUp(String username, String email, String password) async {
@@ -34,9 +39,9 @@ class AuthServices {
       if (userCredential.user != null) {
         User? user = userCredential.user;
         _addUserToFireBase(username, email, password, user!.uid);
+        _currentUser = userCredential.user;
+        return _currentUser;
       }
-
-      return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         showToast(message: 'Email already in use');
@@ -57,7 +62,10 @@ class AuthServices {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      return userCredential.user;
+      if (userCredential.user != null) {
+        _currentUser = userCredential.user;
+        return _currentUser;
+      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         showToast(message: 'Invalid Email or Password');

@@ -13,31 +13,37 @@ class UserProvider extends ChangeNotifier {
   late UserModel user;
 
   UserProvider() {
-    currentUser = services.getCurrentUser();
     _loadUserInfo();
   }
 
   Future<void> _loadUserInfo() async {
     try {
-      DocumentSnapshot<Map<String, dynamic>> snapshot =
-          await userCollection.doc(currentUser!.uid).get();
-      user = UserModel.fromSnapshot(snapshot);
+      currentUser = services.getCurrentUser();
+      if (currentUser != null) {
+        DocumentSnapshot<Map<String, dynamic>> snapshot =
+            await userCollection.doc(currentUser!.uid).get();
+        user = UserModel.fromSnapshot(snapshot);
+        notifyListeners();
+      } else {
+        showToast(message: 'Null User');
+      }
     } catch (e) {
-      showToast(message: 'Error: $e');
+      showToast(message: 'Loading Error: $e');
     }
   }
 
   void updateUserName(String name) async {
-    user.username = name;
-
-    try {
-      await userCollection
-          .doc(currentUser!.uid)
-          .update({'username': user.username});
-      _loadUserInfo();
-      notifyListeners();
-    } catch (e) {
-      showToast(message: 'Error: $e');
+    if (name.isNotEmpty) {
+      user.username = name;
+      try {
+        await userCollection
+            .doc(currentUser!.uid)
+            .update({'username': user.username});
+        _loadUserInfo();
+        notifyListeners();
+      } catch (e) {
+        showToast(message: 'Error: $e');
+      }
     }
   }
 }

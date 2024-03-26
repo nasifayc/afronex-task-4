@@ -1,4 +1,5 @@
 import 'package:afronex_shop_app/screens/users/login.dart';
+import 'package:afronex_shop_app/services/firebase_auth_services.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
@@ -13,12 +14,11 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  AuthServices services = AuthServices();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late bool isSigning;
-
-  get services => null;
 
   @override
   void initState() {
@@ -52,11 +52,12 @@ class _SignUpPageState extends State<SignUpPage> {
             builder: (context) => const LoginPage(),
           ),
           (route) => false);
-      showToast(message: 'User Credit Successfuly');
+      showToast(message: 'User Created Successfuly');
     } else {
       setState(() {
         isSigning = false;
       });
+      showToast(message: 'Some error occurred');
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:afronex_shop_app/screens/users/signup.dart';
 import 'package:afronex_shop_app/services/firebase_auth_services.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
@@ -43,7 +44,12 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         isLogging = false;
       });
-      Navigator.pushNamed(context, '/landing');
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const LandingPage(),
+          ),
+          (route) => false);
     } else {
       setState(() {
         isLogging = false;
@@ -89,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                   ? CircularProgressIndicator(
                       color: Theme.of(context).primaryColor)
                   : GestureDetector(
-                      onTap:_loginWithEmailAndPassword,
+                      onTap: _loginWithEmailAndPassword,
                       child: Button(
                         title: 'Login',
                         width: size.width * 0.5,
