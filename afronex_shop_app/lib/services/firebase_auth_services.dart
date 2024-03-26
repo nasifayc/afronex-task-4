@@ -7,7 +7,7 @@ class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late User? _currentUser;
 
-  User? getCurrentUser() => _currentUser;
+  User? getCurrentUser() => _auth.currentUser;
 
   Future<void> _addUserToFireBase(
       String username, String email, String password, String id) async {

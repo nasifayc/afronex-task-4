@@ -1,11 +1,10 @@
-import 'package:afronex_shop_app/screens/landing.dart';
+import 'package:afronex_shop_app/providers/user_controller.dart';
 import 'package:afronex_shop_app/screens/users/signup.dart';
 import 'package:afronex_shop_app/services/firebase_auth_services.dart';
-import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -33,31 +32,31 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
   }
 
-  Future<void> _loginWithEmailAndPassword() async {
-    setState(() {
-      isLogging = true;
-    });
+  // Future<void> _loginWithEmailAndPassword() async {
+  //   setState(() {
+  //     isLogging = true;
+  //   });
 
-    User? user = await services.logIn(
-        _emailController.text.trim(), _passwordController.text.trim());
-    if (user != null) {
-      setState(() {
-        isLogging = false;
-      });
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LandingPage(),
-          ),
-          (route) => false);
-    } else {
-      setState(() {
-        isLogging = false;
-      });
-      showToast(message: 'No User Found');
-    }
-  }
-
+  //   User? user = await services.logIn(
+  //       _emailController.text.trim(), _passwordController.text.trim());
+  //   if (user != null) {
+  //     setState(() {
+  //       isLogging = false;
+  //     });
+  //     Navigator.pushAndRemoveUntil(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => const LandingPage(),
+  //         ),
+  //         (route) => false);
+  //   } else {
+  //     setState(() {
+  //       isLogging = false;
+  //     });
+  //     showToast(message: 'No User Found');
+  //   }
+  // }
+  UserController controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -91,17 +90,26 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 20,
               ),
-              isLogging
-                  ? CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor)
-                  : GestureDetector(
-                      onTap: _loginWithEmailAndPassword,
-                      child: Button(
-                        title: 'Login',
-                        width: size.width * 0.5,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+              GetBuilder<UserController>(
+                builder: (_) {
+                  bool isSigned = controller.isSignedIn;
+                  return isSigned
+                      ? CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor)
+                      : GestureDetector(
+                          onTap: () {
+                            controller.loginWithEmailAndPassword(
+                                _emailController.text.trim(),
+                                _passwordController.text.trim());
+                          },
+                          child: Button(
+                            title: 'Login',
+                            width: size.width * 0.5,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        );
+                },
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -114,12 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SignUpPage(),
-                          ),
-                          (route) => false);
+                      Get.to(const SignUpPage());
                     },
                     child: const Text(
                       'Sign Up',

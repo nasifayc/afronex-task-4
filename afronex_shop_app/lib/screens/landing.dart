@@ -1,10 +1,11 @@
-import 'package:afronex_shop_app/providers/user_provider.dart';
+import 'package:afronex_shop_app/providers/user_controller.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/cartpage.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/home.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/profile_page.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/search.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:get/get.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -15,6 +16,7 @@ class LandingPage extends StatefulWidget {
 
 class _LandingPageState extends State<LandingPage> {
   int page = 0;
+  UserController controller = Get.put(UserController());
 
   List<Widget> pages = const [
     HomePage(),

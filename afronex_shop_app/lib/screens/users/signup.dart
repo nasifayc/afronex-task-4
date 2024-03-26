@@ -1,10 +1,10 @@
+import 'package:afronex_shop_app/providers/user_controller.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/firebase_auth_services.dart';
-import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -34,33 +34,33 @@ class _SignUpPageState extends State<SignUpPage> {
     _passwordController.dispose();
   }
 
-  Future<void> _signUpWithEmailAndPassword() async {
-    setState(() {
-      isSigning = true;
-    });
+  // Future<void> _signUpWithEmailAndPassword() async {
+  //   setState(() {
+  //     isSigning = true;
+  //   });
 
-    User? user = await services.signUp(_usernameController.text.trim(),
-        _emailController.text.trim(), _passwordController.text.trim());
+  //   User? user = await services.signUp(_usernameController.text.trim(),
+  //       _emailController.text.trim(), _passwordController.text.trim());
 
-    if (user != null) {
-      setState(() {
-        isSigning = false;
-      });
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const LoginPage(),
-          ),
-          (route) => false);
-      showToast(message: 'User Created Successfuly');
-    } else {
-      setState(() {
-        isSigning = false;
-      });
-      showToast(message: 'Some error occurred');
-    }
-  }
-
+  //   if (user != null) {
+  //     setState(() {
+  //       isSigning = false;
+  //     });
+  //     Navigator.pushAndRemoveUntil(
+  //         context,
+  //         MaterialPageRoute(
+  //           builder: (context) => const LoginPage(),
+  //         ),
+  //         (route) => false);
+  //     showToast(message: 'User Created Successfuly');
+  //   } else {
+  //     setState(() {
+  //       isSigning = false;
+  //     });
+  //     showToast(message: 'Some error occurred');
+  //   }
+  // }
+  UserController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -103,17 +103,26 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(
                 height: 20,
               ),
-              isSigning
-                  ? CircularProgressIndicator(
-                      color: Theme.of(context).primaryColor)
-                  : GestureDetector(
-                      onTap: _signUpWithEmailAndPassword,
-                      child: Button(
-                        title: 'Sign Up',
-                        width: size.width * 0.5,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
+              GetBuilder<UserController>(
+                builder: (_) {
+                  return controller.isSignedIn
+                      ? CircularProgressIndicator(
+                          color: Theme.of(context).primaryColor)
+                      : GestureDetector(
+                          onTap: () {
+                            controller.signUpWithEmailAndPassword(
+                                _usernameController.text.trim(),
+                                _emailController.text.trim(),
+                                _passwordController.text.trim());
+                          },
+                          child: Button(
+                            title: 'Sign Up',
+                            width: size.width * 0.5,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        );
+                },
+              ),
               const SizedBox(
                 height: 10,
               ),
@@ -126,12 +135,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LoginPage(),
-                          ),
-                          (route) => false);
+                      Get.to(const LoginPage());
                     },
                     child: const Text(
                       'Login',
