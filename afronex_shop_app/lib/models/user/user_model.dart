@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String _defaultProfileURL = 'asset/images/default.jpg';
+  final String defaultProfileURL = 'asset/images/default.jpg';
   String username;
   final String email;
   final String password;

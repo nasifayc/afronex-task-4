@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/models/user_model.dart';
+import 'package:afronex_shop_app/models/user/user_model.dart';
 import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/firebase_auth_services.dart';
@@ -53,7 +53,7 @@ class UserController extends GetxController {
     if (user != null) {
       _loadUserInfo();
       _isSignIn.value = false;
-      Get.to(const LandingPage());
+      Get.off(const LandingPage());
     } else {
       _isSignIn.value = false;
       showToast(message: 'No User Found');
