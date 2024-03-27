@@ -1,6 +1,6 @@
 import 'package:afronex_shop_app/providers/user_controller.dart';
 import 'package:afronex_shop_app/screens/users/signup.dart';
-import 'package:afronex_shop_app/services/firebase_auth_services.dart';
+import 'package:afronex_shop_app/services/authentication/firebase_auth_services.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
