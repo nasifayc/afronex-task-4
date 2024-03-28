@@ -53,7 +53,7 @@ class UserController extends GetxController {
     if (user != null) {
       _loadUserInfo();
       _isSignIn.value = false;
-      Get.off(const LandingPage());
+      Get.off(LandingPage());
     } else {
       _isSignIn.value = false;
       showToast(message: 'No User Found');

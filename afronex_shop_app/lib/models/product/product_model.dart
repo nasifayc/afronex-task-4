@@ -1,10 +1,9 @@
-
 import 'package:afronex_shop_app/models/product/category_model.dart';
 
 class ProductModel {
   int? id;
   String? title;
-  double? price;
+  int? price;
   String? description;
   Category? category;
   List<String?> images;
@@ -18,13 +17,16 @@ class ProductModel {
       required this.images});
 
   factory ProductModel.fromMap(Map<String, dynamic> json) {
+    List<String?> listOfimages = (json['images'] as List<dynamic>)
+        .map((image) => image.toString())
+        .toList();
     return ProductModel(
         id: json['id'],
         title: json['title'],
         price: json['price'],
         description: json['description'],
         category: Category.fromMap(json['category']),
-        images: json['images']);
+        images: listOfimages);
   }
 
   Map<String, dynamic> toJson() {

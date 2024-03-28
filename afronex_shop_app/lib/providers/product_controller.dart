@@ -5,10 +5,12 @@ import 'package:get/get.dart';
 
 class ProductController extends GetxController {
   final ProductService service = ProductService();
-  late List<ProductModel>? _products;
 
-  List<ProductModel>? get products => _products;
-  
+  final featuredProducts = <ProductModel>[].obs;
+  final popularProducts = <ProductModel>[].obs;
+  // var totalProducts =  <ProductModel>[].obs;
+  final isLoading = true.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -17,13 +19,30 @@ class ProductController extends GetxController {
 
   Future<void> loadProductInfo() async {
     try {
-      _products =
-          await service.fetchData('https://api.escuelajs.co/api/v1/products');
-      if (_products != null) {
+      isLoading(true);
+      update();
+      final List<ProductModel> fetchedFeaturedProducts =
+          await service.fetchData(
+              'https://api.escuelajs.co/api/v1/products?offset=0&limit=10');
+      final List<ProductModel> fetchedPopularProducts = await service.fetchData(
+          'https://api.escuelajs.co/api/v1/products?offset=10&limit=10');
+      if (fetchedPopularProducts.isNotEmpty &&
+          fetchedPopularProducts.isNotEmpty) {
+        featuredProducts.assignAll(fetchedFeaturedProducts);
+        popularProducts.assignAll(fetchedPopularProducts);
         update();
+      } else {
+        showToast(message: 'Can\'t Fetch Data');
       }
+
+      //   totalProducts = RxList<ProductModel>()
+      // ..addAll(featuredProducts.value)
+      // ..addAll(popularProducts.value);
     } catch (e) {
       showToast(message: 'Loading Error: $e');
+    } finally {
+      isLoading(false);
+      update();
     }
   }
 }
