@@ -1,4 +1,6 @@
 import 'package:afronex_shop_app/models/user/user_model.dart';
+import 'package:afronex_shop_app/providers/cart_controller.dart';
+import 'package:afronex_shop_app/providers/product_controller.dart';
 import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/authentication/firebase_auth_services.dart';
@@ -10,6 +12,8 @@ import 'package:get/get.dart';
 class UserController extends GetxController {
   final userCollection = FirebaseFirestore.instance.collection('users');
   AuthServices services = AuthServices();
+  final cartController = Get.put(CartController());
+  final  productController = Get.put(ProductController());
 
   late UserModel _user;
   final _isSignOut = false.obs;
@@ -37,6 +41,8 @@ class UserController extends GetxController {
             await userCollection.doc(currentUser.uid).get();
         _user = UserModel.fromSnapshot(snapshot);
         update();
+        productController.loadProductInfo();
+        cartController.loadCartItems(userId: _user.userId);
       } else {
         showToast(message: 'Null User');
       }
@@ -53,7 +59,7 @@ class UserController extends GetxController {
     if (user != null) {
       _loadUserInfo();
       _isSignIn.value = false;
-      Get.off(LandingPage());
+      Get.off(() => LandingPage());
     } else {
       _isSignIn.value = false;
       showToast(message: 'No User Found');
@@ -71,7 +77,7 @@ class UserController extends GetxController {
     if (user != null) {
       _isSignIn.value = false;
       update();
-      Get.to(const LoginPage());
+      Get.to(() => const LoginPage());
       showToast(message: 'User Created Successfuly');
     } else {
       _isSignIn.value = false;
@@ -97,7 +103,7 @@ class UserController extends GetxController {
   Future<void> signOut() async {
     try {
       await services.signOut();
-      Get.offAll(const LoginPage());
+      Get.offAll(() => const LoginPage());
       showToast(message: '${user.username} signed out');
     } catch (e) {
       showToast(message: '$e');

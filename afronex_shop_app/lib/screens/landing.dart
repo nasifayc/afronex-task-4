@@ -12,7 +12,7 @@ class LandingPage extends StatelessWidget {
   final List<Widget> pages = [
     HomePage(),
     const SearchPage(),
-    const CartPage(),
+    CartPage(),
     const ProfilePage(),
   ];
 

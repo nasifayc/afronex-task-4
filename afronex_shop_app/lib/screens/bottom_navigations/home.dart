@@ -1,9 +1,14 @@
+import 'package:afronex_shop_app/providers/cart_controller.dart';
 import 'package:afronex_shop_app/providers/product_controller.dart';
 import 'package:afronex_shop_app/providers/user_controller.dart';
+import 'package:afronex_shop_app/screens/other/all_products.dart';
+import 'package:afronex_shop_app/screens/other/product_detail.dart';
+import 'package:afronex_shop_app/services/utils/image_slider.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/product_card.dart';
 import 'package:afronex_shop_app/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
@@ -12,12 +17,12 @@ class HomePage extends StatelessWidget {
   final TextEditingController searchController = TextEditingController();
 
   final UserController _userController = Get.find();
-
-  final _productController = Get.put(ProductController());
+  final ProductController _productController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(kToolbarHeight + 30),
         child: AppBar(
@@ -67,17 +72,19 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
-                      child: const Text(
+                      onTap: () {
+                        Get.to(() => AllProductsPage());
+                      },
+                      child: Text(
                         'See All',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     )
                   ],
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  height: Get.height * 0.38,
+                  height: Get.height * 0.35,
                   child: GetBuilder<ProductController>(
                     builder: (_) {
                       if (_productController.isLoading.value) {
@@ -97,11 +104,10 @@ class HomePage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   ProductCard(
-                                      imgUrl: featuredProduct.images[0],
-                                      title: featuredProduct.title,
-                                      price: featuredProduct.price),
+                                    product: featuredProduct,
+                                  ),
                                   const SizedBox(
-                                    width: 10,
+                                    width: 25,
                                   )
                                 ],
                               ),
@@ -123,16 +129,19 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
-                      child: const Text(
+                      onTap: () {
+                        Get.to(() => AllProductsPage());
+                      },
+                      child: Text(
                         'See All',
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: Theme.of(context).primaryColor),
                       ),
                     )
                   ],
                 ),
+                const SizedBox(height: 10),
                 SizedBox(
-                  height: Get.height * 0.38,
+                  height: Get.height * 0.35,
                   child: GetBuilder<ProductController>(
                     builder: (_) {
                       if (_productController.isLoading.value) {
@@ -152,11 +161,10 @@ class HomePage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   ProductCard(
-                                      imgUrl: popularProduct.images[0],
-                                      title: popularProduct.title,
-                                      price: popularProduct.price),
+                                    product: popularProduct,
+                                  ),
                                   const SizedBox(
-                                    width: 10,
+                                    width: 25,
                                   )
                                 ],
                               ),
@@ -169,13 +177,13 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 GetBuilder<UserController>(
-                  builder: (controller) {
-                    return controller.isSignOut
+                  builder: (_) {
+                    return _userController.isSignOut
                         ? CircularProgressIndicator(
                             color: Theme.of(context).primaryColor)
                         : GestureDetector(
                             onTap: () {
-                              controller.signOut();
+                              _userController.signOut();
                             },
                             child: Button(
                                 title: 'Sign out',

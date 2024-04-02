@@ -17,13 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   AuthServices services = AuthServices();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late bool isLogging;
-
-  @override
-  void initState() {
-    super.initState();
-    isLogging = false;
-  }
+  
 
   @override
   void dispose() {
@@ -32,31 +26,8 @@ class _LoginPageState extends State<LoginPage> {
     _passwordController.dispose();
   }
 
-  // Future<void> _loginWithEmailAndPassword() async {
-  //   setState(() {
-  //     isLogging = true;
-  //   });
-
-  //   User? user = await services.logIn(
-  //       _emailController.text.trim(), _passwordController.text.trim());
-  //   if (user != null) {
-  //     setState(() {
-  //       isLogging = false;
-  //     });
-  //     Navigator.pushAndRemoveUntil(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const LandingPage(),
-  //         ),
-  //         (route) => false);
-  //   } else {
-  //     setState(() {
-  //       isLogging = false;
-  //     });
-  //     showToast(message: 'No User Found');
-  //   }
-  // }
-  UserController controller = Get.put(UserController());
+  
+  final UserController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
