@@ -7,18 +7,8 @@ class CartModel {
 
   CartModel({required this.item, required this.quantity});
 
-  void increaseQuantity() {
-    ++quantity;
-  }
-
-  void decreaseQuantity() {
-    --quantity;
-  }
-
-  factory CartModel.fromSnapshot(
-      DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    return
-     CartModel(
+  factory CartModel.fromSnapshot(Map<String, dynamic> snapshot) {
+    return CartModel(
       item: ProductModel.fromMap(snapshot['item']),
       quantity: snapshot['quantity'],
     );

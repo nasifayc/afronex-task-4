@@ -11,16 +11,15 @@ class ProductController extends GetxController {
   // var totalProducts =  <ProductModel>[].obs;
   final isLoading = true.obs;
 
-
   Future<void> loadProductInfo() async {
     try {
       isLoading(true);
       update();
       final List<ProductModel> fetchedFeaturedProducts =
           await service.fetchData(
-              'https://api.escuelajs.co/api/v1/products?offset=20&limit=20');
+              'https://api.escuelajs.co/api/v1/products?offset=10&limit=20');
       final List<ProductModel> fetchedPopularProducts = await service.fetchData(
-          'https://api.escuelajs.co/api/v1/products?offset=30&limit=20');
+          'https://api.escuelajs.co/api/v1/products?offset=20&limit=20');
       if (fetchedPopularProducts.isNotEmpty &&
           fetchedPopularProducts.isNotEmpty) {
         featuredProducts.assignAll(fetchedFeaturedProducts);

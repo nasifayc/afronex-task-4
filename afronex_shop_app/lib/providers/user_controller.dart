@@ -13,7 +13,7 @@ class UserController extends GetxController {
   final userCollection = FirebaseFirestore.instance.collection('users');
   AuthServices services = AuthServices();
   final cartController = Get.put(CartController());
-  final  productController = Get.put(ProductController());
+  final productController = Get.put(ProductController());
 
   late UserModel _user;
   final _isSignOut = false.obs;

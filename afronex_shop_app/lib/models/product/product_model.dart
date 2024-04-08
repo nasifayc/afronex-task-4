@@ -7,6 +7,7 @@ class ProductModel {
   String? description;
   Category? category;
   List<String?> images;
+  bool? isAddedToCart;
 
   ProductModel(
       {this.id,
@@ -36,7 +37,8 @@ class ProductModel {
       'price': price,
       'description': description,
       'category': category!.toJson(),
-      'images': images
+      'images': images,
+      'isAddedToCart' : isAddedToCart
     };
   }
 }

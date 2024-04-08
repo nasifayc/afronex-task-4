@@ -27,7 +27,8 @@ class ProductDetail extends StatelessWidget {
                   bottomLeft: Radius.circular(30),
                   bottomRight: Radius.circular(30)),
               image: DecorationImage(
-                  image: NetworkImage(product.images[0]!), fit: BoxFit.cover),
+                  image: NetworkImage(product.category!.image!),
+                  fit: BoxFit.cover),
             ),
           ),
           Padding(

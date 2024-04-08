@@ -1,8 +1,6 @@
-import 'package:afronex_shop_app/providers/cart_controller.dart';
 import 'package:afronex_shop_app/providers/product_controller.dart';
 import 'package:afronex_shop_app/providers/user_controller.dart';
 import 'package:afronex_shop_app/screens/other/all_products.dart';
-import 'package:afronex_shop_app/screens/other/product_detail.dart';
 import 'package:afronex_shop_app/services/utils/image_slider.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/product_card.dart';
