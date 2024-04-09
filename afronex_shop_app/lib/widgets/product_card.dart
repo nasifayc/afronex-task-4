@@ -79,21 +79,28 @@ class ProductCard extends StatelessWidget {
             ),
           ),
           Positioned(
-              top: 10,
-              right: 10,
-              child: GestureDetector(
-                onTap: () {
-                  CartModel newCartModel =
-                      CartModel(item: product, quantity: 1);
-                  _cartController.addItemsToCart(
-                      newCartModel, _userController.user.userId);
-                  showToast(message: 'Item Add!');
-                },
-                child: CircleAvatar(
-                  backgroundColor: Theme.of(context).primaryColor,
-                  child: const Icon(Icons.add, color: Colors.white),
-                ),
-              ))
+            top: 10,
+            right: 10,
+            child: Obx(() => Visibility(
+                  visible: !product.isAdded.value,
+                  child: GestureDetector(
+                    onTap: () async {
+                      CartModel newCartModel =
+                          CartModel(item: product, quantity: 1);
+                      _cartController.addItemsToCart(
+                          newCartModel, _userController.user.userId);
+                      showToast(message: 'Item Add!');
+                      product.isAdded.value = true;
+                      product.saveIsAddedState();
+                      // Set isAdded to true
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: const Icon(Icons.add, color: Colors.white),
+                    ),
+                  ),
+                )),
+          )
         ],
       ),
     );

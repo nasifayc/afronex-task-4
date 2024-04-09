@@ -21,9 +21,9 @@ class AllProductsPage extends StatelessWidget {
         child: GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: Get.width * 0.045,
-            mainAxisSpacing: Get.height * 0.045,
-            childAspectRatio: Get.width / 700,
+            crossAxisSpacing: Get.width * 0.025,
+            mainAxisSpacing: Get.height * 0.025,
+            childAspectRatio: Get.width / 500,
           ),
           itemCount: _productController.featuredProducts.length,
           itemBuilder: (context, index) {

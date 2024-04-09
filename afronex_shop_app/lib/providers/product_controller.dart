@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 class ProductController extends GetxController {
   final ProductService service = ProductService();
+  RxBool isAdded = false.obs;
 
   final featuredProducts = <ProductModel>[].obs;
   final popularProducts = <ProductModel>[].obs;
@@ -17,11 +18,17 @@ class ProductController extends GetxController {
       update();
       final List<ProductModel> fetchedFeaturedProducts =
           await service.fetchData(
-              'https://api.escuelajs.co/api/v1/products?offset=10&limit=20');
+              'https://api.escuelajs.co/api/v1/products?offset=0&limit=10');
       final List<ProductModel> fetchedPopularProducts = await service.fetchData(
-          'https://api.escuelajs.co/api/v1/products?offset=20&limit=20');
+          'https://api.escuelajs.co/api/v1/products?offset=0&limit=20');
       if (fetchedPopularProducts.isNotEmpty &&
           fetchedPopularProducts.isNotEmpty) {
+        for (ProductModel product in fetchedFeaturedProducts) {
+          await product.loadIsAddedState();
+        }
+        for (ProductModel product in fetchedPopularProducts) {
+          await product.loadIsAddedState();
+        }
         featuredProducts.assignAll(fetchedFeaturedProducts);
         popularProducts.assignAll(fetchedPopularProducts);
       } else {

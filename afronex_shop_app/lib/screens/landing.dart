@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/screens/bottom_navigations/cartpage.dart';
+import 'package:afronex_shop_app/screens/bottom_navigations/cart/cartpage.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/home.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/profile_page.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/search.dart';

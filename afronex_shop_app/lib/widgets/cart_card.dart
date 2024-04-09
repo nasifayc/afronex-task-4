@@ -82,8 +82,10 @@ class CartCard extends StatelessWidget {
                 top: 0,
                 right: 0,
                 child: GestureDetector(
-                  onTap: () {
+                  onTap: () async {
                     final user = _userController.user;
+                    item.item.isAdded.value = false;
+                    item.item.saveIsAddedState();
                     _cartController.deleteItem(userId: user.userId, item: item);
                   },
                   child: const Icon(
@@ -98,7 +100,8 @@ class CartCard extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () {
-                        _cartController.decreaseQuantity(item);
+                        final user = _userController.user;
+                        _cartController.decreaseQuantity(item, user.userId);
                       },
                       child: CircleAvatar(
                         radius: 15,
@@ -122,7 +125,8 @@ class CartCard extends StatelessWidget {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _cartController.increaseQuantity(item);
+                        final user = _userController.user;
+                        _cartController.increaseQuantity(item, user.userId);
                       },
                       child: CircleAvatar(
                         backgroundColor: Theme.of(context).primaryColor,
@@ -141,3 +145,4 @@ class CartCard extends StatelessWidget {
     );
   }
 }
+

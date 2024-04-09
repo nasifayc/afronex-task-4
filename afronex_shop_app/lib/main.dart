@@ -1,6 +1,4 @@
 import 'package:afronex_shop_app/firebase_options.dart';
-import 'package:afronex_shop_app/providers/cart_controller.dart';
-import 'package:afronex_shop_app/providers/product_controller.dart';
 import 'package:afronex_shop_app/providers/user_controller.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -43,4 +41,6 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+
 

@@ -74,18 +74,20 @@ class CartController extends GetxController {
             previousValue + (cartItem.item.price! * cartItem.quantity));
   }
 
-  void increaseQuantity(CartModel item) {
+  void increaseQuantity(CartModel item, String userId) {
     if (item.quantity < 10) {
       ++item.quantity;
       calculateTotalPrice();
+      saveData(userId: userId);
       update();
     }
   }
 
-  void decreaseQuantity(CartModel item) {
-    if (item.quantity > 0) {
+  void decreaseQuantity(CartModel item, String userId) {
+    if (item.quantity > 1) {
       --item.quantity;
       calculateTotalPrice();
+      saveData(userId: userId);
       update();
     }
   }
