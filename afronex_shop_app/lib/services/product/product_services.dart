@@ -4,6 +4,8 @@ import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:http/http.dart' as http;
 
 class ProductService {
+
+
   Future<List<ProductModel>> fetchData(String url) async {
     try {
       final response = await http.get(Uri.parse(url));
@@ -14,7 +16,7 @@ class ProductService {
         throw Exception('Some error occured while fetching data');
       }
     } catch (e) {
-      showToast(message: 'Fetching Erroe Occured: $e');
+      showToast(message: 'Fetching Error Occured: $e');
     }
     return [];
   }

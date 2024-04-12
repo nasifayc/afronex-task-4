@@ -11,7 +11,7 @@ class LandingPage extends StatelessWidget {
 
   final List<Widget> pages = [
     HomePage(),
-    const SearchPage(),
+    SearchPage(),
     CartPage(),
     const ProfilePage(),
   ];
@@ -42,8 +42,3 @@ class LandingPage extends StatelessWidget {
         ));
   }
 }
-
-
-
-
-

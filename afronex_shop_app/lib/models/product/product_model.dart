@@ -9,7 +9,6 @@ class ProductModel {
   String? description;
   Category? category;
   List<String?> images;
-  bool? isAddedToCart;
   RxBool isAdded = false.obs;
 
   ProductModel(
@@ -54,8 +53,7 @@ class ProductModel {
       'price': price,
       'description': description,
       'category': category!.toJson(),
-      'images': images,
-      'isAddedToCart': isAddedToCart
+      'images': images
     };
   }
 }

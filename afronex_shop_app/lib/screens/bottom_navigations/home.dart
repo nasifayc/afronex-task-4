@@ -12,8 +12,6 @@ import 'package:get/get.dart';
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final TextEditingController searchController = TextEditingController();
-
   final UserController _userController = Get.find();
   final ProductController _productController = Get.find();
 
@@ -56,10 +54,10 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                SearchBox(controller: searchController),
-                // const SizedBox(height: 20),
-                // CarouselSliderAnimation(),
+                SearchBox(),
                 const SizedBox(height: 20),
+                // CarouselSliderAnimation(),
+                // const SizedBox(height: 20),
                 Row(
                   children: [
                     const Expanded(

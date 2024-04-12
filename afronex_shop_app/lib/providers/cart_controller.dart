@@ -51,7 +51,6 @@ class CartController extends GetxController {
         'items': cartItems.map((item) => item.toJson()).toList(),
       });
     } catch (e) {
-      print('Saving data Error: $e');
       showToast(message: 'Saving Error: $e');
     }
   }
@@ -62,7 +61,6 @@ class CartController extends GetxController {
         'items': cartItems.map((item) => item.toJson()).toList(),
       });
     } catch (e) {
-      print('Creating data Error: $e');
       showToast(message: 'Creating data Error: $e');
     }
   }
@@ -100,3 +98,5 @@ class CartController extends GetxController {
     update();
   }
 }
+
+

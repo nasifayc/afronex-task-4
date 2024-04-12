@@ -9,7 +9,7 @@ class ProductController extends GetxController {
 
   final featuredProducts = <ProductModel>[].obs;
   final popularProducts = <ProductModel>[].obs;
-  // var totalProducts =  <ProductModel>[].obs;
+  final searchedProducts = <ProductModel>[].obs;
   final isLoading = true.obs;
 
   Future<void> loadProductInfo() async {
@@ -34,15 +34,28 @@ class ProductController extends GetxController {
       } else {
         showToast(message: 'Can\'t Fetch Data');
       }
-
-      //   totalProducts = RxList<ProductModel>()
-      // ..addAll(featuredProducts.value)
-      // ..addAll(popularProducts.value);
     } catch (e) {
       showToast(message: 'Loading Error: $e');
     } finally {
       isLoading(false);
       update();
+    }
+  }
+
+  Future<void> searchProduct({required String parameter}) async {
+    try {
+      final List<ProductModel> fetchedSearchProducts = await service.fetchData(
+          'https://api.escuelajs.co/api/v1/products/?title=$parameter');
+      if (fetchedSearchProducts.isNotEmpty) {
+        for (ProductModel product in fetchedSearchProducts) {
+          await product.loadIsAddedState();
+          searchedProducts.assignAll(fetchedSearchProducts);
+        }
+      } else {
+        showToast(message: 'Can\'t Fetch Data');
+      }
+    } catch (e) {
+      showToast(message: 'Loading Error: $e');
     }
   }
 }

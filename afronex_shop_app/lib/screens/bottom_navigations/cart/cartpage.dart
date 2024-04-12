@@ -1,11 +1,11 @@
 import 'package:afronex_shop_app/providers/cart_controller.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/cart/cart_summary.dart';
+import 'package:afronex_shop_app/screens/other/checkout/checkout.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/cart_card.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});
@@ -53,7 +53,13 @@ class CartPage extends StatelessWidget {
                   ),
                   CartSummary(),
                   const SizedBox(height: 20),
-                  Button(title: 'Check Out', width : double.infinity, color: Theme.of(context).primaryColor),
+                  GestureDetector(
+                    onTap: () => Get.to(() => CheckOutPage()),
+                    child: Button(
+                        title: 'Check Out',
+                        width: double.infinity,
+                        color: Theme.of(context).primaryColor),
+                  ),
                 ],
               ));
         }
@@ -61,5 +67,3 @@ class CartPage extends StatelessWidget {
     );
   }
 }
-
-
