@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/providers/cart_controller.dart';
+import 'package:afronex_shop_app/controller/product/cart_controller.dart';
 import 'package:afronex_shop_app/screens/other/checkout/checkout.dart';
 import 'package:afronex_shop_app/screens/other/checkout/payment_card.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';

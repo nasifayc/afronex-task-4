@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/providers/product_controller.dart';
+import 'package:afronex_shop_app/controller/product/product_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/providers/cart_controller.dart';
+import 'package:afronex_shop_app/controller/product/cart_controller.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/cart/cart_summary.dart';
 import 'package:afronex_shop_app/screens/other/checkout/checkout.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';

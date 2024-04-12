@@ -1,13 +1,13 @@
 import 'package:afronex_shop_app/firebase_options.dart';
-import 'package:afronex_shop_app/providers/payement_controller/payment_controller.dart';
-import 'package:afronex_shop_app/providers/user_controller.dart';
+import 'package:afronex_shop_app/controller/payement_controller/payment_controller.dart';
+import 'package:afronex_shop_app/controller/user/user_controller.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'providers/search_controller.dart';
+import 'controller/product/search_controller.dart';
 
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
@@ -33,11 +33,9 @@ class MyApp extends StatelessWidget {
       title: 'Afronex Shop',
       home: const LoginPage(),
       initialBinding: BindingsBuilder(() {
-        // Get.put(CartController());
         Get.put(UserController());
         Get.put(PaymentController());
         Get.put(SearchBarController());
-        // Get.put(ProductController());
       }),
       theme: ThemeData(
         primaryColor: Colors.teal,

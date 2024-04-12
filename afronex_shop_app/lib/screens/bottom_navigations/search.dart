@@ -1,12 +1,13 @@
-import 'package:afronex_shop_app/providers/product_controller.dart';
+import 'package:afronex_shop_app/controller/product/product_controller.dart';
 import 'package:afronex_shop_app/widgets/product_card.dart';
+import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-import '../../providers/search_controller.dart';
+import '../../controller/product/search_controller.dart';
 import '../../widgets/search_bar.dart';
 
 class SearchPage extends StatelessWidget {
@@ -32,6 +33,15 @@ class SearchPage extends StatelessWidget {
                 return Center(
                   child: CircularProgressIndicator(
                     color: Theme.of(context).primaryColor,
+                  ),
+                );
+              } else if (_productController.searchedProducts.isEmpty) {
+                return const Center(
+                  child: StyledText(
+                    title: 'No Result found',
+                    fontSize: 18,
+                    isBold: true,
+                    color: Colors.grey,
                   ),
                 );
               } else {

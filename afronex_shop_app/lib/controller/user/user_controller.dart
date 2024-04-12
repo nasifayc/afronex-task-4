@@ -1,6 +1,6 @@
 import 'package:afronex_shop_app/models/user/user_model.dart';
-import 'package:afronex_shop_app/providers/cart_controller.dart';
-import 'package:afronex_shop_app/providers/product_controller.dart';
+import 'package:afronex_shop_app/controller/product/cart_controller.dart';
+import 'package:afronex_shop_app/controller/product/product_controller.dart';
 import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/authentication/firebase_auth_services.dart';
@@ -41,13 +41,22 @@ class UserController extends GetxController {
             await userCollection.doc(currentUser.uid).get();
         _user = UserModel.fromSnapshot(snapshot);
         update();
-        productController.loadProductInfo();
-        cartController.loadCartItems(userId: _user.userId);
+        // productController.loadProductInfo();
+        // cartController.loadCartItems(userId: _user.userId);
       } else {
         showToast(message: 'Null User');
       }
     } catch (e) {
       showToast(message: 'Loading Error: $e');
+    }
+  }
+
+  Future<void> _loadProducts() async {
+    try {
+      await productController.loadProductInfo();
+      await cartController.loadCartItems(userId: _user.userId);
+    } catch (e) {
+      showToast(message: 'Product Loading Error: $e');
     }
   }
 
@@ -58,6 +67,7 @@ class UserController extends GetxController {
     User? user = await services.logIn(email, password);
     if (user != null) {
       _loadUserInfo();
+      _loadProducts();
       _isSignIn.value = false;
       Get.off(() => LandingPage());
     } else {
@@ -86,17 +96,12 @@ class UserController extends GetxController {
     }
   }
 
-  void updateUserName(String name) async {
-    if (name.isNotEmpty) {
-      _user.username = name;
-      try {
-        await userCollection
-            .doc(_user.userId)
-            .update({'username': _user.username});
-        _loadUserInfo();
-      } catch (e) {
-        showToast(message: 'Error: $e');
-      }
+  void updateUserData(UserModel updatedUserData) async {
+    try {
+      await userCollection.doc(_user.userId).update(updatedUserData.toJson());
+      _loadUserInfo();
+    } catch (e) {
+      showToast(message: 'Error: $e');
     }
   }
 

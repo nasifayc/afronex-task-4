@@ -1,7 +1,7 @@
 import 'package:afronex_shop_app/models/cart/cart_model.dart';
 import 'package:afronex_shop_app/models/product/product_model.dart';
-import 'package:afronex_shop_app/providers/cart_controller.dart';
-import 'package:afronex_shop_app/providers/user_controller.dart';
+import 'package:afronex_shop_app/controller/product/cart_controller.dart';
+import 'package:afronex_shop_app/controller/user/user_controller.dart';
 import 'package:afronex_shop_app/screens/other/product_detail.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:flutter/material.dart';

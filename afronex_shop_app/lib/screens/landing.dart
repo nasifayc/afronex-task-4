@@ -13,7 +13,7 @@ class LandingPage extends StatelessWidget {
     HomePage(),
     SearchPage(),
     CartPage(),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   final RxInt selectedIndex = 0.obs;

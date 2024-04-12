@@ -52,7 +52,7 @@ class ProductController extends GetxController {
           searchedProducts.assignAll(fetchedSearchProducts);
         }
       } else {
-        showToast(message: 'Can\'t Fetch Data');
+        searchedProducts.clear();
       }
     } catch (e) {
       showToast(message: 'Loading Error: $e');

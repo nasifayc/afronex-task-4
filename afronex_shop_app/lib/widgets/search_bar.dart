@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/providers/search_controller.dart';
+import 'package:afronex_shop_app/controller/product/search_controller.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -41,3 +41,4 @@ class SearchBox extends StatelessWidget {
     );
   }
 }
+

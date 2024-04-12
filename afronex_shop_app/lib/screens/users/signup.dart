@@ -1,4 +1,4 @@
-import 'package:afronex_shop_app/providers/user_controller.dart';
+import 'package:afronex_shop_app/controller/user/user_controller.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/authentication/firebase_auth_services.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
