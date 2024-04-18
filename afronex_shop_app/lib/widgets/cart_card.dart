@@ -38,7 +38,7 @@ class CartCard extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       image: DecorationImage(
-                          image: NetworkImage(item.item.category!.image!),
+                          image: NetworkImage(item.item.images[0]!),
                           fit: BoxFit.cover)),
                 ),
                 SizedBox(
@@ -145,4 +145,3 @@ class CartCard extends StatelessWidget {
     );
   }
 }
-

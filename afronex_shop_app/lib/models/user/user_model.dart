@@ -4,7 +4,7 @@ class UserModel {
   final String defaultProfileURL = 'asset/images/default.jpg';
   String username;
   final String email;
-  final String password;
+  String password;
   final String userId;
   String? imgUrl;
 

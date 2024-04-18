@@ -1,18 +1,15 @@
 import 'package:afronex_shop_app/controller/product/product_controller.dart';
 import 'package:afronex_shop_app/widgets/product_card.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:lottie/lottie.dart';
 
-import '../../controller/product/search_controller.dart';
 import '../../widgets/search_bar.dart';
 
 class SearchPage extends StatelessWidget {
   SearchPage({super.key});
-  final SearchBarController _searchController = Get.find();
+  //final SearchBarController _searchController = Get.find();
   final ProductController _productController = Get.find();
   @override
   Widget build(BuildContext context) {
@@ -29,13 +26,21 @@ class SearchPage extends StatelessWidget {
               height: 10,
             ),
             Obx(() {
-              if (_searchController.isSearching.value) {
+              if (_productController.isSearching.value) {
                 return Center(
                   child: CircularProgressIndicator(
                     color: Theme.of(context).primaryColor,
                   ),
                 );
-              } else if (_productController.searchedProducts.isEmpty) {
+              }
+              if (_productController.isEmpty.value) {
+                return Center(
+                  child: Lottie.asset(
+                    "asset/animations/Animation - 1713401698592.json",
+                  ),
+                );
+              }
+              if (_productController.searchedProducts.isEmpty) {
                 return const Center(
                   child: StyledText(
                     title: 'No Result found',

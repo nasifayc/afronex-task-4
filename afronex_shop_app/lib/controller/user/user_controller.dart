@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:afronex_shop_app/controller/user/profile_controller.dart';
 import 'package:afronex_shop_app/models/user/user_model.dart';
 import 'package:afronex_shop_app/controller/product/cart_controller.dart';
 import 'package:afronex_shop_app/controller/product/product_controller.dart';
@@ -14,6 +17,7 @@ class UserController extends GetxController {
   AuthServices services = AuthServices();
   final cartController = Get.put(CartController());
   final productController = Get.put(ProductController());
+  late ProfileController profileController;
 
   late UserModel _user;
   final _isSignOut = false.obs;
@@ -33,7 +37,7 @@ class UserController extends GetxController {
         userId: 'defI');
   }
 
-  Future<void> _loadUserInfo() async {
+  Future<void> loadUserInfo() async {
     try {
       final currentUser = services.getCurrentUser();
       if (currentUser != null) {
@@ -41,8 +45,7 @@ class UserController extends GetxController {
             await userCollection.doc(currentUser.uid).get();
         _user = UserModel.fromSnapshot(snapshot);
         update();
-        // productController.loadProductInfo();
-        // cartController.loadCartItems(userId: _user.userId);
+        profileController.loadUserinfo();
       } else {
         showToast(message: 'Null User');
       }
@@ -61,12 +64,13 @@ class UserController extends GetxController {
   }
 
   Future<void> loginWithEmailAndPassword(String email, String password) async {
+    profileController = Get.put(ProfileController());
     _isSignIn.value = true;
     update();
 
     User? user = await services.logIn(email, password);
     if (user != null) {
-      _loadUserInfo();
+      loadUserInfo();
       _loadProducts();
       _isSignIn.value = false;
       Get.off(() => LandingPage());
@@ -96,10 +100,10 @@ class UserController extends GetxController {
     }
   }
 
-  void updateUserData(UserModel updatedUserData) async {
+  Future<void> updateUserData(UserModel updatedUserData) async {
     try {
       await userCollection.doc(_user.userId).update(updatedUserData.toJson());
-      _loadUserInfo();
+      loadUserInfo();
     } catch (e) {
       showToast(message: 'Error: $e');
     }

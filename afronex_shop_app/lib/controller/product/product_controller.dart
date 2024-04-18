@@ -1,9 +1,12 @@
+
 import 'package:afronex_shop_app/models/product/product_model.dart';
 import 'package:afronex_shop_app/services/product/product_services.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ProductController extends GetxController {
+  //final _searchController = Get.put(SearchBarController());
   final ProductService service = ProductService();
   RxBool isAdded = false.obs;
 
@@ -11,6 +14,31 @@ class ProductController extends GetxController {
   final popularProducts = <ProductModel>[].obs;
   final searchedProducts = <ProductModel>[].obs;
   final isLoading = true.obs;
+
+  TextEditingController searchController = TextEditingController();
+  RxBool isSearching = false.obs;
+  RxBool isEmpty = true.obs;
+
+  void clearValue() {
+    searchController.clear();
+    isEmpty.value = true;
+    update();
+  }
+
+  // void searchProduct() async {
+  //   isSearching.value = true;
+  //   update();
+  //   if (searchController.text.isNotEmpty) {
+  //     await searchProduct(
+  //         parameter: searchController.text.trim());
+  //     isSearching.value = false;
+  //     update();
+  //   } else {
+  //     _productController.searchedProducts.clear();
+  //   }
+  //   isSearching.value = false;
+  //   update();
+  // }
 
   Future<void> loadProductInfo() async {
     try {
@@ -42,20 +70,28 @@ class ProductController extends GetxController {
     }
   }
 
-  Future<void> searchProduct({required String parameter}) async {
-    try {
-      final List<ProductModel> fetchedSearchProducts = await service.fetchData(
-          'https://api.escuelajs.co/api/v1/products/?title=$parameter');
-      if (fetchedSearchProducts.isNotEmpty) {
-        for (ProductModel product in fetchedSearchProducts) {
-          await product.loadIsAddedState();
-          searchedProducts.assignAll(fetchedSearchProducts);
+  Future<void> searchProduct() async {
+    isSearching.value = true;
+    update();
+    if (searchController.text.isNotEmpty) {
+      isEmpty.value = false;
+      update();
+      try {
+        final List<ProductModel> fetchedSearchProducts = await service.fetchData(
+            'https://api.escuelajs.co/api/v1/products/?title=${searchController.text.trim()}');
+        isSearching.value = false;
+        update();
+        if (fetchedSearchProducts.isNotEmpty) {
+          for (ProductModel product in fetchedSearchProducts) {
+            await product.loadIsAddedState();
+            searchedProducts.assignAll(fetchedSearchProducts);
+          }
+        } else {
+          searchedProducts.clear();
         }
-      } else {
-        searchedProducts.clear();
+      } catch (e) {
+        showToast(message: 'Loading Error: $e');
       }
-    } catch (e) {
-      showToast(message: 'Loading Error: $e');
     }
   }
 }

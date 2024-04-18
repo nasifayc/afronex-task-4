@@ -31,9 +31,10 @@ class HomePage extends StatelessWidget {
                 final user = _userController.user;
                 return ListTile(
                     leading: CircleAvatar(
-                      child: _userController.user.imgUrl == null
-                          ? Image.asset(user.defaultProfileURL)
-                          : Image.network(user.imgUrl!),
+                      radius: 70,
+                      backgroundImage: user.imgUrl == null
+                          ? AssetImage(user.defaultProfileURL) as ImageProvider
+                          : NetworkImage(user.imgUrl!),
                     ),
                     title: const Text('Hello!'),
                     subtitle: Text(user.username),
