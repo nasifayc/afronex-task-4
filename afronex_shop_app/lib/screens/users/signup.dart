@@ -103,7 +103,7 @@ class SignUpPage extends StatelessWidget {
             GestureDetector(
               onTap: () {
                 Get.offAll(() =>
-                    SplashScreen(page: 'Welcome Back', child: LoginPage()));
+                    SplashScreen(page: 'Welcome Back!', child: LoginPage()));
               },
               child: const Text(
                 'Login',
@@ -112,7 +112,7 @@ class SignUpPage extends StatelessWidget {
               ),
             )
           ],
-        )
+        ),
       ],
     );
   }

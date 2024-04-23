@@ -20,11 +20,22 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const StyledText(
-              title: 'Afronex Shop',
-              isBold: true,
-              fontSize: 25,
-              color: Colors.black),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundImage:
+                    AssetImage('asset/images/afronex.jpg') as ImageProvider,
+              ),
+              SizedBox(width: 10),
+              StyledText(
+                  title: 'Afronex Shop',
+                  isBold: true,
+                  fontSize: 25,
+                  color: Colors.teal),
+            ],
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -34,8 +45,8 @@ class WelcomeScreen extends StatelessWidget {
           ),
           GestureDetector(
               onTap: () {
-                Get.to(() => SplashScreen(
-                    page: 'Login To Your Account', child: LoginPage()));
+                Get.to(() =>
+                    SplashScreen(page: 'Welcome Back!', child: LoginPage()));
               },
               child: Button(
                   title: 'Get Started',

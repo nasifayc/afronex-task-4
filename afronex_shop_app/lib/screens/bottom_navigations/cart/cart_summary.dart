@@ -1,4 +1,3 @@
-import 'package:afronex_shop_app/models/cart/cart_model.dart';
 import 'package:afronex_shop_app/controller/product/cart_controller.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/material.dart';

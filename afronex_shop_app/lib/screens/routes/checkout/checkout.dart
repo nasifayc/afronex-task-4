@@ -37,6 +37,7 @@ class CheckOutPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            // _paymentController.googlePayButton,
             GestureDetector(
               onTap: () {
                 _paymentController.paypal();

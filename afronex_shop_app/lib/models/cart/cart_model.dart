@@ -1,5 +1,4 @@
 import 'package:afronex_shop_app/models/product/product_model.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CartModel {
   final ProductModel item;

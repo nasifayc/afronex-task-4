@@ -5,7 +5,8 @@ import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:get/get.dart';
-import 'package:pay/pay.dart';
+
+
 
 class PaymentController extends GetxController {
   final CartController _cartController = Get.find();
@@ -16,6 +17,21 @@ class PaymentController extends GetxController {
     PaymentCard(icon: const Icon(Icons.money), name: 'Cash'),
   ].obs;
 
+  // var googlePayButton = GooglePayButton(
+  //   paymentConfiguration: PaymentConfiguration.fromJsonString(defaultGooglePay),
+  //   paymentItems: const [
+  //     PaymentItem(
+  //       label: 'Total',
+  //       amount: '0.01',
+  //       status: PaymentItemStatus.final_price,
+  //     )
+  //   ],
+  //   width: Get.width,
+  //   type: GooglePayButtonType.buy,
+  //   margin: const EdgeInsets.only(top: 15),
+  //   onPaymentResult: (result) => showToast(message: result.toString()),
+  //   loadingIndicator: const Center(child: CircularProgressIndicator()),
+  // );
   void selectCard(int index) {
     for (int i = 0; i < cards.length; i++) {
       if (i == index) {
@@ -26,9 +42,9 @@ class PaymentController extends GetxController {
     }
     update();
   }
-  
-  void paypal() {
-    Get.to(() => PaypalCheckoutView(
+
+  void paypal() async {
+    await Get.to(() => PaypalCheckoutView(
           sandboxMode: true,
           clientId:
               "AWZvsxu3RpPa09QmaDGQESzokzS-XktU4Dk7nLMkjsea488GSTknltiwGQ7KGL9ykXGnGkMhh6gc5DU1",
@@ -40,8 +56,8 @@ class PaymentController extends GetxController {
                 "total": _cartController.totalPrice.value.toString(),
                 "currency": "USD",
                 "details": {
-                  "subtotal": _cartController.totalPrice.value.toString(),
-                  "shipping": '0',
+                  "subtotal": _cartController.subTotalPrice.value.toString(),
+                  "shipping": '10',
                   "shipping_discount": 0
                 }
               },
@@ -59,54 +75,23 @@ class PaymentController extends GetxController {
                           "currency": "USD"
                         })
                     .toList(),
-
-                // [
-                //   {
-                //     "name": "Apple",
-                //     "quantity": 4,
-                //     "price": '10',
-                //     "currency": "USD"
-                //   },
-                //   {
-                //     "name": "Pineapple",
-                //     "quantity": 5,
-                //     "price": '12',
-                //     "currency": "USD"
-                //   }
-                // ],
-
-                // Optional
-                //   "shipping_address": {
-                //     "recipient_name": "Tharwat samy",
-                //     "line1": "tharwat",
-                //     "line2": "",
-                //     "city": "tharwat",
-                //     "country_code": "EG",
-                //     "postal_code": "25025",
-                //     "phone": "+00000000",
-                //     "state": "ALex"
-                //  },
               }
             }
           ],
           note: "Contact us for any questions on your order.",
           onSuccess: (Map params) async {
             showToast(message: "onSuccess: $params");
-            Get.offAll(() => CheckOutPage());
+            Get.off(() => CheckOutPage());
           },
           onError: (error) {
+            debugPrint("onError: $error");
             showToast(message: "onError: $error");
-            Get.offAll(() => CheckOutPage());
+            Get.off(() => CheckOutPage());
           },
           onCancel: () {
             showToast(message: "cancelled");
-            Get.offAll(() => CheckOutPage());
+            Get.off(() => CheckOutPage());
           },
         ));
   }
-
 }
-
-
-
-

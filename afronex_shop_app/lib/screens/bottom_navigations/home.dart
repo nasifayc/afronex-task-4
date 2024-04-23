@@ -3,7 +3,6 @@ import 'package:afronex_shop_app/controller/user/user_controller.dart';
 import 'package:afronex_shop_app/screens/routes/all_products.dart';
 import 'package:afronex_shop_app/services/utils/image_slider.dart';
 import 'package:afronex_shop_app/widgets/app_bar.dart';
-import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/product_card.dart';
 import 'package:afronex_shop_app/widgets/search_bar.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
@@ -13,8 +12,7 @@ import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-
-  final UserController _userController = Get.find();
+  
   final ProductController _productController = Get.find();
 
   @override

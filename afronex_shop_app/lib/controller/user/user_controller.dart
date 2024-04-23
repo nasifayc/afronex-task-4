@@ -7,10 +7,8 @@ import 'package:afronex_shop_app/screens/splash/splash_screen.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/authentication/firebase_auth_services.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
-import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {

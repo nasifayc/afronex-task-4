@@ -6,6 +6,7 @@ import 'package:afronex_shop_app/widgets/cart_card.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 class CartPage extends StatelessWidget {
   CartPage({super.key});
@@ -21,8 +22,21 @@ class CartPage extends StatelessWidget {
       body: GetBuilder<CartController>(builder: (_) {
         final cartItems = _cartController.cartItems;
         if (cartItems.isEmpty) {
-          return const Center(
-            child: Text('No Items Add'),
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Lottie.asset(
+                  "asset/animations/welcome.json",
+                  width: Get.width * 0.7,
+                ),
+                const StyledText(
+                    title: 'No Items Add',
+                    color: Colors.grey,
+                    fontSize: 16,
+                    isBold: true),
+              ],
+            ),
           );
         } else {
           return Stack(
@@ -58,9 +72,9 @@ class CartPage extends StatelessWidget {
                 ),
               ),
               DraggableScrollableSheet(
-                initialChildSize: 0.1, 
+                initialChildSize: 0.1,
                 minChildSize: 0.05,
-                maxChildSize: 0.9, 
+                maxChildSize: 0.9,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return Container(
@@ -72,7 +86,7 @@ class CartPage extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            CartSummary(), 
+                            CartSummary(),
                             const SizedBox(height: 20),
                             GestureDetector(
                               onTap: () => Get.to(() => CheckOutPage()),

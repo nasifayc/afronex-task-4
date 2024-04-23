@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:afronex_shop_app/models/cart/cart_model.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +20,6 @@ class CartController extends GetxController {
     final Map<String, dynamic>? data = snapshot.data();
 
     if (data != null && data.containsKey('items')) {
-      showToast(message: "$userId has cart items");
       final List<dynamic> itemsData = data['items'];
       try {
         final List<CartModel> fetchedCartItems = itemsData
@@ -30,9 +27,6 @@ class CartController extends GetxController {
             .toList();
         cartItems.assignAll(fetchedCartItems);
         calculateTotalPrice();
-        showToast(
-            message:
-                "cart data loaded succesfuly: cart length: ${cartItems.length}");
         update();
       } catch (e) {
         showToast(message: "$e");
@@ -70,6 +64,8 @@ class CartController extends GetxController {
     }
   }
 
+
+  
   void calculateTotalPrice() {
     subTotalPrice.value = cartItems.fold(
         0.0,

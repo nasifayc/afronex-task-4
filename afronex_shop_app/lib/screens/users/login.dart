@@ -2,8 +2,8 @@ import 'package:afronex_shop_app/controller/user/login_controller.dart';
 import 'package:afronex_shop_app/controller/user/user_controller.dart';
 import 'package:afronex_shop_app/screens/splash/splash_screen.dart';
 import 'package:afronex_shop_app/screens/users/signup.dart';
-import 'package:afronex_shop_app/services/utils/welcome_image.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
+import 'package:afronex_shop_app/widgets/divider.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:afronex_shop_app/widgets/text_field.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +64,7 @@ class LoginPage extends StatelessWidget {
           },
         ),
         const SizedBox(
-          height: 10,
+          height: 20,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,16 +87,23 @@ class LoginPage extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 20),
-        const Center(
+        Center(
           child: Column(
             children: [
-              StyledText(
-                  title: 'Or sign up with',
-                  fontSize: 16,
-                  color: Color.fromARGB(255, 190, 190, 190),
-                  isBold: false),
-              SizedBox(height: 10),
-              CircleAvatar(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  CustomDivider(width: Get.width * 0.2),
+                  const StyledText(
+                      title: 'Or sign up with',
+                      fontSize: 16,
+                      color: Color.fromRGBO(184, 184, 184, 1),
+                      isBold: false),
+                  CustomDivider(width: Get.width * 0.2),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const CircleAvatar(
                 radius: 20,
                 backgroundImage: NetworkImage(
                     'https://th.bing.com/th/id/OIP.EhTMbGiYfYzQnWLgjZaoJAHaHa?w=199&h=199&c=7&r=0&o=5&dpr=1.5&pid=1.7'),
