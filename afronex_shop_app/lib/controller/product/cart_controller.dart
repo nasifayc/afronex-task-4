@@ -7,7 +7,12 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
   final collection = FirebaseFirestore.instance.collection('cart');
+  final double shippingCost = 10;
+  final double taxRate = 0.1;
+
   List<CartModel> cartItems = <CartModel>[].obs;
+
+  RxDouble subTotalPrice = 0.0.obs;
   RxDouble totalPrice = 0.0.obs;
 
   Future<void> loadCartItems({required String userId}) async {
@@ -66,10 +71,12 @@ class CartController extends GetxController {
   }
 
   void calculateTotalPrice() {
-    totalPrice.value = cartItems.fold(
+    subTotalPrice.value = cartItems.fold(
         0.0,
         (previousValue, cartItem) =>
             previousValue + (cartItem.item.price! * cartItem.quantity));
+    totalPrice.value =
+        (subTotalPrice.value + (subTotalPrice.value * taxRate)) + shippingCost;
   }
 
   void increaseQuantity(CartModel item, String userId) {
@@ -98,5 +105,3 @@ class CartController extends GetxController {
     update();
   }
 }
-
-

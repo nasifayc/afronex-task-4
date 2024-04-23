@@ -57,12 +57,21 @@ class ProfilePage extends StatelessWidget {
                     color: Colors.grey),
                 const SizedBox(height: 10),
                 FormContainer(
+                    width: Get.width,
+                    controller: _profileController.fullNameController,
+                    labelText: 'Full Name',
+                    isPasswordField: false,
+                    inputType: TextInputType.text),
+                const SizedBox(height: 10),
+                FormContainer(
+                    width: Get.width,
                     controller: _profileController.usernameController,
                     labelText: 'Username',
                     isPasswordField: false,
                     inputType: TextInputType.text),
                 const SizedBox(height: 10),
                 FormContainer(
+                    width: Get.width,
                     controller: _profileController.passwordController,
                     labelText: 'Password',
                     isPasswordField: true,
@@ -83,11 +92,27 @@ class ProfilePage extends StatelessWidget {
                       _userController.loadUserInfo();
                     },
                     child: Button(
-                        title: 'save',
+                        title: 'Save',
                         width: Get.width * 0.4,
                         color: Theme.of(context).primaryColor),
                   );
           }),
+          const SizedBox(height: 20),
+          GetBuilder<UserController>(
+            builder: (_) {
+              return _userController.isSignOut
+                  ? CircularProgressIndicator(
+                      color: Theme.of(context).primaryColor)
+                  : GestureDetector(
+                      onTap: () {
+                        _userController.signOut();
+                      },
+                      child: Button(
+                          title: 'Sign out',
+                          width: MediaQuery.of(context).size.width * 0.5,
+                          color: const Color.fromARGB(255, 141, 10, 0)));
+            },
+          )
         ]),
       ),
     );

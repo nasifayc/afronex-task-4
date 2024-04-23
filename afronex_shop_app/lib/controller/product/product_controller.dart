@@ -1,21 +1,23 @@
-
 import 'package:afronex_shop_app/models/product/product_model.dart';
 import 'package:afronex_shop_app/services/product/product_services.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductController extends GetxController {
-  //final _searchController = Get.put(SearchBarController());
   final ProductService service = ProductService();
   RxBool isAdded = false.obs;
 
   final featuredProducts = <ProductModel>[].obs;
   final popularProducts = <ProductModel>[].obs;
   final searchedProducts = <ProductModel>[].obs;
+  final allProducts = <ProductModel>[].obs;
+
   final isLoading = true.obs;
 
   TextEditingController searchController = TextEditingController();
+  RxString searchResult = ''.obs;
   RxBool isSearching = false.obs;
   RxBool isEmpty = true.obs;
 
@@ -25,22 +27,9 @@ class ProductController extends GetxController {
     update();
   }
 
-  // void searchProduct() async {
-  //   isSearching.value = true;
-  //   update();
-  //   if (searchController.text.isNotEmpty) {
-  //     await searchProduct(
-  //         parameter: searchController.text.trim());
-  //     isSearching.value = false;
-  //     update();
-  //   } else {
-  //     _productController.searchedProducts.clear();
-  //   }
-  //   isSearching.value = false;
-  //   update();
-  // }
-
   Future<void> loadProductInfo() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     try {
       isLoading(true);
       update();
@@ -48,7 +37,7 @@ class ProductController extends GetxController {
           await service.fetchData(
               'https://api.escuelajs.co/api/v1/products?offset=0&limit=10');
       final List<ProductModel> fetchedPopularProducts = await service.fetchData(
-          'https://api.escuelajs.co/api/v1/products?offset=0&limit=20');
+          'https://api.escuelajs.co/api/v1/products?offset=10&limit=10');
       if (fetchedPopularProducts.isNotEmpty &&
           fetchedPopularProducts.isNotEmpty) {
         for (ProductModel product in fetchedFeaturedProducts) {
@@ -74,6 +63,7 @@ class ProductController extends GetxController {
     isSearching.value = true;
     update();
     if (searchController.text.isNotEmpty) {
+      searchResult.value = searchController.text.trim();
       isEmpty.value = false;
       update();
       try {
@@ -92,6 +82,23 @@ class ProductController extends GetxController {
       } catch (e) {
         showToast(message: 'Loading Error: $e');
       }
+    }
+  }
+
+  Future<void> loadAllProducts() async {
+    isLoading(true);
+    update();
+    try {
+      final List<ProductModel> feachedAllProducts =
+          await service.fetchData('https://api.escuelajs.co/api/v1/products');
+      if (feachedAllProducts.isNotEmpty) {
+        allProducts.assignAll(feachedAllProducts);
+      }
+    } catch (e) {
+      showToast(message: 'Loading Error: $e');
+    } finally {
+      isLoading(false);
+      update();
     }
   }
 }

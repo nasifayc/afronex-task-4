@@ -9,12 +9,13 @@ class AuthServices {
 
   User? getCurrentUser() => _auth.currentUser;
 
-  Future<void> _addUserToFireBase(
-      String username, String email, String password, String id) async {
+  Future<void> _addUserToFireBase(String fullName, String username,
+      String email, String password, String id) async {
     try {
       final userCollection = FirebaseFirestore.instance.collection('users');
 
       UserModel newUser = UserModel(
+          fullName: fullName,
           username: username,
           email: email,
           password: password,
@@ -23,12 +24,17 @@ class AuthServices {
 
       await userCollection.doc(newUser.userId).set(newUser.toJson());
     } catch (e) {
+      showToast(message: 'Unable to Add user into Collection');
       throw Exception(e);
     }
   }
 
-  Future<User?> signUp(String username, String email, String password) async {
-    if (email.isEmpty || password.isEmpty || username.isEmpty) {
+  Future<User?> signUp(
+      String fullName, String username, String email, String password) async {
+    if (email.isEmpty ||
+        password.isEmpty ||
+        username.isEmpty ||
+        fullName.isEmpty) {
       showToast(message: 'Some Fields are Empty');
       return null;
     }
@@ -38,7 +44,8 @@ class AuthServices {
           .createUserWithEmailAndPassword(email: email, password: password);
       if (userCredential.user != null) {
         User? user = userCredential.user;
-        _addUserToFireBase(username, email, password, user!.uid);
+        await _addUserToFireBase(
+            fullName, username, email, password, user!.uid);
         _currentUser = userCredential.user;
         return _currentUser;
       }
@@ -49,7 +56,6 @@ class AuthServices {
         showToast(message: 'An error Occured: ${e.code}');
       }
     }
-
     return null;
   }
 

@@ -1,6 +1,6 @@
 import 'package:afronex_shop_app/controller/payement_controller/payment_controller.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/cart/cart_summary.dart';
-import 'package:afronex_shop_app/screens/other/checkout/payment.dart';
+import 'package:afronex_shop_app/screens/routes/checkout/payment.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/material.dart';

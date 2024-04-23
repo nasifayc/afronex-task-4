@@ -1,6 +1,6 @@
 import 'package:afronex_shop_app/controller/product/cart_controller.dart';
 import 'package:afronex_shop_app/screens/bottom_navigations/cart/cart_summary.dart';
-import 'package:afronex_shop_app/screens/other/checkout/checkout.dart';
+import 'package:afronex_shop_app/screens/routes/checkout/checkout.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/cart_card.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
@@ -25,43 +25,72 @@ class CartPage extends StatelessWidget {
             child: Text('No Items Add'),
           );
         } else {
-          return Padding(
-              padding: EdgeInsets.all(Get.width * 0.025),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: Get.height * 0.45,
-                    width: double.infinity,
-                    child: ListView.builder(
-                      itemCount: cartItems.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            CartCard(item: cartItems[index]),
-                            const SizedBox(
-                              height: 15,
-                            )
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  CartSummary(),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () => Get.to(() => CheckOutPage()),
-                    child: Button(
-                        title: 'Check Out',
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.all(Get.width * 0.025),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(
+                        height: Get.height,
                         width: double.infinity,
-                        color: Theme.of(context).primaryColor),
+                        child: ListView.builder(
+                          itemCount: cartItems.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                CartCard(item: cartItems[index]),
+                                const SizedBox(
+                                  height: 15,
+                                )
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                    ],
                   ),
-                ],
-              ));
+                ),
+              ),
+              DraggableScrollableSheet(
+                initialChildSize: 0.1, 
+                minChildSize: 0.05,
+                maxChildSize: 0.9, 
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    color: Colors.white,
+                    child: SingleChildScrollView(
+                      controller: scrollController,
+                      child: Padding(
+                        padding: EdgeInsets.all(Get.width * 0.025),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            CartSummary(), 
+                            const SizedBox(height: 20),
+                            GestureDetector(
+                              onTap: () => Get.to(() => CheckOutPage()),
+                              child: Button(
+                                title: 'Check Out',
+                                width: double.infinity,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
+          );
         }
       }),
     );

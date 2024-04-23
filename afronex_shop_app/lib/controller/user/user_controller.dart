@@ -1,15 +1,16 @@
-import 'dart:io';
-
 import 'package:afronex_shop_app/controller/user/profile_controller.dart';
 import 'package:afronex_shop_app/models/user/user_model.dart';
 import 'package:afronex_shop_app/controller/product/cart_controller.dart';
 import 'package:afronex_shop_app/controller/product/product_controller.dart';
 import 'package:afronex_shop_app/screens/landing.dart';
+import 'package:afronex_shop_app/screens/splash/splash_screen.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
 import 'package:afronex_shop_app/services/authentication/firebase_auth_services.dart';
 import 'package:afronex_shop_app/services/utils/toast_message.dart';
+import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
@@ -31,6 +32,7 @@ class UserController extends GetxController {
   void onInit() {
     super.onInit();
     _user = UserModel(
+        fullName: 'Unset',
         username: 'default',
         email: 'default@gmail.com',
         password: 'defP',
@@ -82,16 +84,17 @@ class UserController extends GetxController {
   }
 
   Future<void> signUpWithEmailAndPassword(
-      String username, String email, String password) async {
+      String fullName, String username, String email, String password) async {
     _isSignIn.value = true;
     update();
 
-    User? user = await services.signUp(username, email, password);
+    User? user = await services.signUp(fullName, username, email, password);
 
     if (user != null) {
       _isSignIn.value = false;
       update();
-      Get.to(() => const LoginPage());
+      Get.offAll(() =>
+          SplashScreen(page: 'Login To Your Account', child: LoginPage()));
       showToast(message: 'User Created Successfuly');
     } else {
       _isSignIn.value = false;
@@ -110,12 +113,18 @@ class UserController extends GetxController {
   }
 
   Future<void> signOut() async {
+    _isSignOut.value = true;
+    update();
     try {
       await services.signOut();
-      Get.offAll(() => const LoginPage());
+      Get.offAll(() =>
+          SplashScreen(page: 'Login To Your Account', child: LoginPage()));
       showToast(message: '${user.username} signed out');
     } catch (e) {
       showToast(message: '$e');
+    }finally{
+      _isSignOut.value = false;
+      update();
     }
   }
 }

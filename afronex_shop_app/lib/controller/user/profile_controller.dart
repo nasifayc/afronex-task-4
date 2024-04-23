@@ -18,10 +18,12 @@ class ProfileController extends GetxController {
 
   RxBool isUpdating = false.obs;
 
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   void loadUserinfo() {
+    fullNameController.text = _userController.user.fullName;
     usernameController.text = _userController.user.username;
     passwordController.text = _userController.user.password;
   }

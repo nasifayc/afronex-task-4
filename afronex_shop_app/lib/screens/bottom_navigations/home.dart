@@ -1,10 +1,12 @@
 import 'package:afronex_shop_app/controller/product/product_controller.dart';
 import 'package:afronex_shop_app/controller/user/user_controller.dart';
-import 'package:afronex_shop_app/screens/other/all_products.dart';
+import 'package:afronex_shop_app/screens/routes/all_products.dart';
 import 'package:afronex_shop_app/services/utils/image_slider.dart';
+import 'package:afronex_shop_app/widgets/app_bar.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/product_card.dart';
 import 'package:afronex_shop_app/widgets/search_bar.dart';
+import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -20,29 +22,8 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(kToolbarHeight + 30),
-        child: AppBar(
-          flexibleSpace: Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              GetBuilder<UserController>(builder: (_) {
-                final user = _userController.user;
-                return ListTile(
-                    leading: CircleAvatar(
-                      radius: 70,
-                      backgroundImage: user.imgUrl == null
-                          ? AssetImage(user.defaultProfileURL) as ImageProvider
-                          : NetworkImage(user.imgUrl!),
-                    ),
-                    title: const Text('Hello!'),
-                    subtitle: Text(user.username),
-                    trailing: const Icon(Icons.shopping_cart));
-              }),
-            ],
-          ),
-        ),
+        preferredSize: const Size.fromHeight(kToolbarHeight + 50),
+        child: CustomeAppBar(),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -50,38 +31,39 @@ class HomePage extends StatelessWidget {
         },
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.only(left: 10, right: 10, top: 40),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
                 SearchBox(),
                 const SizedBox(height: 20),
-                // CarouselSliderAnimation(),
-                // const SizedBox(height: 20),
+                CarouselSliderAnimation(),
+                const SizedBox(height: 20),
                 Row(
                   children: [
                     const Expanded(
-                      child: Text(
-                        'Featured',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
+                      child: StyledText(
+                          title: 'Featured',
+                          fontSize: 20,
+                          isBold: true,
+                          color: Colors.black),
                     ),
                     GestureDetector(
                       onTap: () {
+                        _productController.loadAllProducts();
                         Get.to(() => AllProductsPage());
                       },
-                      child: Text(
-                        'See All',
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
+                      child: StyledText(
+                          title: 'See All',
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                          isBold: false),
                     )
                   ],
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  height: Get.height * 0.35,
+                  height: Get.height * 0.37,
                   child: GetBuilder<ProductController>(
                     builder: (_) {
                       if (_productController.isLoading.value) {
@@ -101,8 +83,8 @@ class HomePage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   ProductCard(
-                                    product: featuredProduct,
-                                  ),
+                                      product: featuredProduct,
+                                      width: Get.width * 0.48),
                                   const SizedBox(
                                     width: 25,
                                   )
@@ -115,30 +97,32 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 10),
+                SizedBox(height: Get.height * 0.07),
                 Row(
                   children: [
                     const Expanded(
-                      child: Text(
-                        'Most Popular',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
+                      child: StyledText(
+                          title: 'Trending',
+                          fontSize: 20,
+                          isBold: true,
+                          color: Colors.black),
                     ),
                     GestureDetector(
                       onTap: () {
+                        _productController.loadAllProducts();
                         Get.to(() => AllProductsPage());
                       },
-                      child: Text(
-                        'See All',
-                        style: TextStyle(color: Theme.of(context).primaryColor),
-                      ),
+                      child: StyledText(
+                          title: 'See All',
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 16,
+                          isBold: false),
                     )
                   ],
                 ),
                 const SizedBox(height: 10),
                 SizedBox(
-                  height: Get.height * 0.35,
+                  height: Get.height * 0.37,
                   child: GetBuilder<ProductController>(
                     builder: (_) {
                       if (_productController.isLoading.value) {
@@ -158,8 +142,8 @@ class HomePage extends StatelessWidget {
                               child: Row(
                                 children: [
                                   ProductCard(
-                                    product: popularProduct,
-                                  ),
+                                      product: popularProduct,
+                                      width: Get.width * 0.48),
                                   const SizedBox(
                                     width: 25,
                                   )
@@ -172,22 +156,6 @@ class HomePage extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 20),
-                GetBuilder<UserController>(
-                  builder: (_) {
-                    return _userController.isSignOut
-                        ? CircularProgressIndicator(
-                            color: Theme.of(context).primaryColor)
-                        : GestureDetector(
-                            onTap: () {
-                              _userController.signOut();
-                            },
-                            child: Button(
-                                title: 'Sign out',
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                color: Theme.of(context).primaryColor));
-                  },
-                )
               ],
             ),
           ),
