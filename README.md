@@ -2,11 +2,11 @@
 ## afronex shop is a simple ecommerce app, that enables users to track, manage and operate on product catalogs.
 
 ## This project consists basic flutter concepts such as:
-- Backend - Firebase (authentication, database, and storag) 
-- State Management - Getx
+- Backend - Firebase (authentication, database, and storage) 
+- State Management - GetX
 - Product Resource - Rest API calls 
 
-## Before using this up make sure to have the latest version of flutter on your computer and git version control as well.
+## Before using this app make sure to have the latest version of flutter on your computer and git version control as well.
 ### Then you can use the app using the following steps:
 
 - clone this repository - git clone [this.url]
