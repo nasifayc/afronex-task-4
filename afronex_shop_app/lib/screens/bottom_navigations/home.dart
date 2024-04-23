@@ -1,5 +1,4 @@
 import 'package:afronex_shop_app/controller/product/product_controller.dart';
-import 'package:afronex_shop_app/controller/user/user_controller.dart';
 import 'package:afronex_shop_app/screens/routes/all_products.dart';
 import 'package:afronex_shop_app/services/utils/image_slider.dart';
 import 'package:afronex_shop_app/widgets/app_bar.dart';
@@ -12,7 +11,7 @@ import 'package:get/get.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  
+
   final ProductController _productController = Get.find();
 
   @override

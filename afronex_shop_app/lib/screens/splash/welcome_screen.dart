@@ -1,8 +1,5 @@
-import 'package:afronex_shop_app/screens/bottom_navigations/home.dart';
-import 'package:afronex_shop_app/screens/landing.dart';
 import 'package:afronex_shop_app/screens/splash/splash_screen.dart';
 import 'package:afronex_shop_app/screens/users/login.dart';
-import 'package:afronex_shop_app/screens/users/signup.dart';
 import 'package:afronex_shop_app/widgets/buttons.dart';
 import 'package:afronex_shop_app/widgets/styled_text.dart';
 import 'package:flutter/material.dart';
